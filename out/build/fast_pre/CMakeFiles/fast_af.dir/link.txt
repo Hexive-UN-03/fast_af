@@ -1,0 +1,1 @@
+/usr/bin/g++ -g CMakeFiles/fast_af.dir/fast_af.cpp.o -o fast_af  -lhts -ldeflate -lz -llzma -lbz2 

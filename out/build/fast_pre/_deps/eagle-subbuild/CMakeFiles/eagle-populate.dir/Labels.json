@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/hexive/code/fast_af/out/build/fast_pre/_deps/eagle-subbuild/CMakeFiles/eagle-populate"
+		},
+		{
+			"file" : "/home/hexive/code/fast_af/out/build/fast_pre/_deps/eagle-subbuild/CMakeFiles/eagle-populate.rule"
+		},
+		{
+			"file" : "/home/hexive/code/fast_af/out/build/fast_pre/_deps/eagle-subbuild/CMakeFiles/eagle-populate-complete.rule"
+		},
+		{
+			"file" : "/home/hexive/code/fast_af/out/build/fast_pre/_deps/eagle-subbuild/eagle-populate-prefix/src/eagle-populate-stamp/eagle-populate-build.rule"
+		},
+		{
+			"file" : "/home/hexive/code/fast_af/out/build/fast_pre/_deps/eagle-subbuild/eagle-populate-prefix/src/eagle-populate-stamp/eagle-populate-configure.rule"
+		},
+		{
+			"file" : "/home/hexive/code/fast_af/out/build/fast_pre/_deps/eagle-subbuild/eagle-populate-prefix/src/eagle-populate-stamp/eagle-populate-download.rule"
+		},
+		{
+			"file" : "/home/hexive/code/fast_af/out/build/fast_pre/_deps/eagle-subbuild/eagle-populate-prefix/src/eagle-populate-stamp/eagle-populate-install.rule"
+		},
+		{
+			"file" : "/home/hexive/code/fast_af/out/build/fast_pre/_deps/eagle-subbuild/eagle-populate-prefix/src/eagle-populate-stamp/eagle-populate-mkdir.rule"
+		},
+		{
+			"file" : "/home/hexive/code/fast_af/out/build/fast_pre/_deps/eagle-subbuild/eagle-populate-prefix/src/eagle-populate-stamp/eagle-populate-patch.rule"
+		},
+		{
+			"file" : "/home/hexive/code/fast_af/out/build/fast_pre/_deps/eagle-subbuild/eagle-populate-prefix/src/eagle-populate-stamp/eagle-populate-test.rule"
+		},
+		{
+			"file" : "/home/hexive/code/fast_af/out/build/fast_pre/_deps/eagle-subbuild/eagle-populate-prefix/src/eagle-populate-stamp/eagle-populate-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"eagle-populate"
+		],
+		"name" : "eagle-populate"
+	}
+}
