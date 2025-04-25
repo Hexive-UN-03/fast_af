@@ -32,7 +32,7 @@ string convert_region(string name, int startpos, int endpos){
     return (return_val);
 }
 
-string calculate_region(string filepath, string region, bool using_samples){
+string calculate_region(string filepath, string region, bool using_samples, string samplepath){
     htsFile *file_pointer = hts_open(filepath.c_str(), "r");
     string fail_string = "FAILED";
     if (!file_pointer){
@@ -43,6 +43,13 @@ string calculate_region(string filepath, string region, bool using_samples){
     if (!hdr){
         fprintf(stderr, "[ERROR]: Failed to open file header\n");
         return fail_string;
+    }
+    // set samples if we found the samples path
+    if (using_samples){
+        if (bcf_hdr_set_samples(hdr, samplepath.c_str(), 1)){
+            fprintf(stderr, "[ERROR]: Failed to apply samples when sample file was expected\n");
+            return fail_string;
+        }
     }
     // NOTE THAT THIS HARDCODES THIS SHIT TO ALWAYS ASSUME TABIX INDEXING LMAO
     // FIX WITH FILESYSTEM LIBRARY LATER ONCE YOU HAVE IT WORKING
@@ -169,11 +176,11 @@ std::vector<string> explode_region(string region, int shrapnel, bool verbose = f
 int main(int argc, char *argv[]){
     // ARGUMENT HANDLING
         // update with argparse later?
-    if (argc < 4){
-        fprintf(stderr, "[ERROR]: Missing arguments, ensure format:\nfast_af filepath region threads\n");
+    if (argc < 6){
+        fprintf(stderr, "[ERROR]: Missing arguments, ensure format:\nfast_af filepath region threads samplefile outpath\n");
         return 1;
-    }else if (argc > 4){
-        fprintf(stderr, "[ERROR]: Too many arguments, ensure format:\nfast_af filepath region threads\n");
+    }else if (argc > 6){
+        fprintf(stderr, "[ERROR]: Too many arguments, ensure format:\nfast_af filepath region threads samplefile outpath\n");
         return 1;
     }
     string bcf_path = argv[1];
@@ -184,10 +191,12 @@ int main(int argc, char *argv[]){
         fprintf(stderr, "[ERROR]: Failed to parse thread count successfully (must be greater than 1)\n");
         return 1;
     }
+    string samples_path = argv[4];
+    string outfile_path = argv[5];
 
     // check if a samples file exists, and if it does, track a boolean
     bool samples_exist = false;
-    std::ifstream samples_file("samples.txt");
+    std::ifstream samples_file(samples_path);
     if (samples_file.good()){
         samples_file.close();
         samples_exist = true;
@@ -200,11 +209,11 @@ int main(int argc, char *argv[]){
         return 1;
     }
     // build a vector of tuples containing the region arguments for each call
-    std::vector<std::tuple<string, string, bool>> processed_args;
+    std::vector<std::tuple<string, string, bool, string>> processed_args;
     for (string shrap_region : shrapnel_regions){
-        processed_args.emplace_back(std::make_tuple(bcf_path, shrap_region, samples_exist));
+        processed_args.emplace_back(std::make_tuple(bcf_path, shrap_region, samples_exist, samples_path));
     }
-    std::ofstream outfile_stream("output.tsv");
+    std::ofstream outfile_stream(outfile_path);
     outfile_stream << "CHR\tPOS\tREF\tALT\tAF" << endl;
     ordered_parallel::ordered_parallel_output(outfile_stream, calculate_region, processed_args);
     outfile_stream.close();
